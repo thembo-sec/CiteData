@@ -21,6 +21,7 @@ def get_particulars(source, i):
 # with open("CDSS-xml-rawdump.xml", encoding='utf8') as file:
 #    doc = xmltodict.parse(file.read())
 
+# TODO let user select datafile
 with open("CDSS-xml-rawdump.xml", encoding='utf8') as file:
     soup = BeautifulSoup(file, 'xml')
 
