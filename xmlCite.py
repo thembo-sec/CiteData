@@ -10,7 +10,7 @@ class Person:
 
 class Citation(object):
     def __init__(self, document):
-        self.soup = document
+        self.soup = document  # https://komax.github.io/blog/text/python/xml/parsing_tei_xml_python/
         self._title = ''
 
     @property
