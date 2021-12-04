@@ -22,6 +22,15 @@ class Citation(object):
         return self._title
 
     @property
+    def metadata(self):
+        metadata = []
+        tags = self.soup.contents
+        for tag in tags:
+            if tag.name:
+                metadata.append(tag.name)
+        return metadata
+
+    @property
     def keywords(self):
         keys = self.soup.contents
         keywords = []
