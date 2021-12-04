@@ -34,32 +34,45 @@ for paper in papers:
     keys = paper.contents
     for key in keys:
         if key.name:
-            if key not in metalist:
-                metalist.append(key)
+            if key.name not in metalist:
+                metalist.append(key.name)
 
     paperlist.append(Citation(paper))
 
 particulars = []
 meta = []
 auths = []
+affiliations =[]
 keywords = []
 
 # TODO fix so that there is a row for each entry. Multiple rows per key in some cases
+# TODO maybe write class for a list of citations? Could include methods for exporting data
 for i, paper in enumerate(paperlist):
+
     particulars.append(get_particulars(paper, i))
-    get_meta = [i, paper.metadata]
-    get_auth = [i, paper.authors, paper.affiliations]
+    get_meta = []
+    get_auth = []
+    get_affil = []
     get_keywords = []
+
     for key in paper.keywords:
         get_keywords.append([i, key])
+    for auth in paper.authors:
+        get_auth.append([i, auth])
+    for affil in paper.affiliations:
+        get_affil.append([i, affil])
+    for metadata in paper.metadata:
+        get_meta.append([i, metadata])
 
-    meta.append(get_meta)
-    auths.append(get_auth)
+    meta.extend(get_meta)
+    auths.extend(get_auth)
+    affiliations.extend(get_affil)
     keywords.extend(get_keywords)
 
 dfp = pd.DataFrame(particulars, columns=('Key', 'Title', 'Year', 'Journal'))
 dfm = pd.DataFrame(meta, columns=('Key', 'Metadata'))
-dfa = pd.DataFrame(auths, columns=('Key', 'Authors', 'Affiliations'))
+dfa = pd.DataFrame(auths, columns=('Key', 'Authors'))
+dfl = pd.DataFrame(affiliations, columns=('Key', 'Affiliations'))
 dfk = pd.DataFrame(keywords, columns=('Key', 'Keywords'))
 
 with pd.ExcelWriter('Output.xlsx') as writer:
