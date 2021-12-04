@@ -84,8 +84,12 @@ dfa = pd.DataFrame(auths, columns=('Key', 'Authors'))
 dfl = pd.DataFrame(affiliations, columns=('Key', 'Affiliations'))
 dfk = pd.DataFrame(keywords, columns=('Key', 'Keywords'))
 
-with pd.ExcelWriter('Output.xlsx') as writer:
-    dfp.to_excel(writer, sheet_name='Particulars')
-    dfm.to_excel(writer, sheet_name='Metadata')
-    dfa.to_excel(writer, sheet_name='Authors')
-    dfk.to_excel(writer, sheet_name='Keywords')
+try:
+    with pd.ExcelWriter('Output.xlsx') as writer:
+        dfp.to_excel(writer, sheet_name='Particulars')
+        dfm.to_excel(writer, sheet_name='Metadata')
+        dfa.to_excel(writer, sheet_name='Authors')
+        dfl.to_excel(writer, sheet_name='Affiliations')
+        dfk.to_excel(writer, sheet_name='Keywords')
+except PermissionError as error:
+    print(error)
