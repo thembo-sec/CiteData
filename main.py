@@ -57,10 +57,19 @@ for i, paper in enumerate(paperlist):
 
     for key in paper.keywords:
         get_keywords.append([i, key])
-    for auth in paper.authors:
-        get_auth.append([i, auth])
-    for affil in paper.affiliations:
-        get_affil.append([i, affil])
+
+    if paper.authors:
+        for auth in paper.authors:
+            get_auth.append([i, auth])
+    else:
+        get_auth.append([i, paper.authors])
+
+    if paper.affiliations:
+        for affil in paper.affiliations:
+            get_affil.append([i, affil])
+    else:
+        get_affil.append([i, paper.affiliations])
+
     for metadata in paper.metadata:
         get_meta.append([i, metadata])
 
