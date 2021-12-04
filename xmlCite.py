@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+
 @dataclass
 class Person:
     name: str
@@ -13,7 +14,7 @@ class Citation(object):
 
     @property
     def title(self):
-        if not(self._title):
+        if not self._title:
             if self.soup.find('title'):
                 self._title = self.soup.find('title').text.strip()
             else:
@@ -32,11 +33,11 @@ class Citation(object):
 
     @property
     def keywords(self):
-        keys = self.soup.contents
+        keys = self.soup.find_all('keyword')
         keywords = []
         for key in keys:
             if key.name:
-                keywords.append(key.name)
+                keywords.append(key.text.strip())
 
         return keywords
 
@@ -87,4 +88,3 @@ class Citation(object):
         else:
             return False
         return journal
-

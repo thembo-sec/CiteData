@@ -44,15 +44,18 @@ meta = []
 auths = []
 keywords = []
 
+# TODO fix so that there is a row for each entry. Multiple rows per key in some cases
 for i, paper in enumerate(paperlist):
     particulars.append(get_particulars(paper, i))
     get_meta = [i, paper.metadata]
     get_auth = [i, paper.authors, paper.affiliations]
-    get_keywords = [i, paper.keywords]
+    get_keywords = []
+    for key in paper.keywords:
+        get_keywords.append([i, key])
 
     meta.append(get_meta)
     auths.append(get_auth)
-    keywords.append(get_keywords)
+    keywords.extend(get_keywords)
 
 dfp = pd.DataFrame(particulars, columns=('Key', 'Title', 'Year', 'Journal'))
 dfm = pd.DataFrame(meta, columns=('Key', 'Metadata'))
