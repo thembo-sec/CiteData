@@ -6,7 +6,7 @@ class Person:
     affiliation: str
 
 
-class citation(object):
+class Citation(object):
     def __init__(self, document):
         self.soup = document
         self._title = ''
@@ -35,12 +35,28 @@ class citation(object):
     def authors(self):
         authors = []
         if self.soup.find('author'):
-            list = self.soup.find_all('author')
+            auth_list = self.soup.find_all('author')
 
-            for auth in list:
+            for auth in auth_list:
                 authors.append(auth.text.strip())
 
             return authors
+        else:
+            return False
+
+    @property
+    def affiliations(self):
+        '''
+        Get the list of affiliations in the paper. Note that some XML files may have a carriage return which is not split.
+        '''
+        affiliations = []
+        if self.soup.find('auth-address'):
+            addresses = self.soup.find('auth-address').text
+            addresses = addresses.split(';')
+            for address in addresses:
+                affiliations.append(address.strip())
+
+            return affiliations
         else:
             return False
 

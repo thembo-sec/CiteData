@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 # import xmltodict
 # import xml.dom.minidom
 # import xml.etree.ElementTree as ET
-from xmlCite import citation
+from xmlCite import Citation
 
 # TODO Figure out affiliation properly, need to parse entire string, delim ';' then add affilliation to each auth
 # TODO Get list of all potential metadata
@@ -25,6 +25,10 @@ papers = soup.find_all('record')
 paperlist = []
 metalist = []
 for paper in papers:
-    paperlist.append(citation(paper))
+    paperlist.append(Citation(paper))
+
+for paper in paperlist:
+    paper.authors
+    paper.affiliations
 
 
